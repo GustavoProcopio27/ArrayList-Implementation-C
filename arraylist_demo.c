@@ -13,8 +13,8 @@ int main()
 
     printf("%s\n", arraylist_get(list,0, string));
 
-    string popped = arraylist_pop(list, 1,string);
-    printf("O tamanho atual eh: %d\n e o elemento retirado foi (%s)\n\n", list->length, popped);
+    string* popped = arraylist_pop(list, 1,string);
+    printf("O tamanho atual eh: %zu\n e o elemento retirado foi (%s)\n\n", list->length, *popped);
 
     for(int i =0;i<list->length;i++)
     {

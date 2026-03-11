@@ -1,1 +1,0 @@
-# Consertar o retorno na função de pop, ela está retirando o elemento certo, mas nao retornando o elemento certo

@@ -65,7 +65,7 @@ void _arraylist_append(ArrayList *arrayList, void *element);
  * @return Elemento removido
  **/
 #define arraylist_pop(arraylist, index, type) \
-    (*(type *)_arraylist_pop(arraylist, index))
+    ((type*)_arraylist_pop(arraylist, index))
 void *_arraylist_pop(ArrayList *arrayList, int index);
 
 // ===============================================================================================================

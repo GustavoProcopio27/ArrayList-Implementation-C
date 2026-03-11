@@ -48,7 +48,7 @@ void resize_list(ArrayList *arrayList)
 ArrayList *arraylist_new(size_t element_size)
 {
     ArrayList *ptr = (ArrayList*) malloc(sizeof(ArrayList));
-    if (ptr == NULL || ptr->data == NULL)
+    if (ptr == NULL)
     {
         exit(1);
     }
@@ -56,7 +56,10 @@ ArrayList *arraylist_new(size_t element_size)
     ptr->length = 0;
     ptr->element_size = element_size;
     ptr->data = malloc(ptr->capacity * element_size);
-
+    if(ptr->data == NULL)
+    {
+        exit(1);
+    }
     return ptr; 
 }
 
@@ -87,6 +90,8 @@ void* _arraylist_pop(ArrayList *arrayList, int index)
     }
 
     void* popped_element_position = _arraylist_get_element_address(arrayList, index);
+    void* popped_element_cpy = malloc(arrayList->element_size);
+    memcpy(popped_element_cpy,popped_element_position, arrayList->element_size);
     void* next_element = _arraylist_get_element_address(arrayList, index+1);
     arrayList->length-=1;
 
@@ -96,7 +101,7 @@ void* _arraylist_pop(ArrayList *arrayList, int index)
     // Assim um pop(5) numa array deve tacar os elementos começando no indice 5 1 posição para tras  
 
 
-    return popped_element_position;
+    return popped_element_cpy;
 }
 
 
