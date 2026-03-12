@@ -201,8 +201,6 @@ Algumas ideias para evoluir a biblioteca:
 
 * iteradores
 
-* inicialização a partir de array
-
 * ordenação
 
 * implementar busca binária no ```arraylist_indexOf``` caso a arraylist possua mais de 30 elementos
