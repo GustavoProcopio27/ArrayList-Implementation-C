@@ -63,6 +63,37 @@ ArrayList *arraylist_new(size_t element_size)
     return ptr; 
 }
 
+ArrayList *arraylist_new_from(void *array, size_t length, size_t capacity, size_t element_size)
+{
+    if (capacity == 0)
+    {
+        capacity = 8;
+    }
+    if (length > capacity || array == NULL)
+    {
+        return NULL;
+    }
+    ArrayList *ptr = (ArrayList *)malloc(sizeof(ArrayList));
+    if (ptr == NULL)
+    {
+        exit(1);
+    }
+
+    ptr->length = length;
+    ptr->capacity = capacity;
+    ptr->element_size = element_size;
+    ptr->data = malloc(ptr->capacity * element_size);
+    if (ptr->data == NULL)
+    {
+        exit(1);
+    }
+
+    memcpy(ptr->data,array, ptr->length*ptr->element_size);
+    
+
+    return ptr;
+}
+
 
 
 void _arraylist_append(ArrayList *arrayList, void *element)
@@ -172,23 +203,3 @@ void arraylist_free(ArrayList *arrayList)
     free(arrayList);
 }
 
-// ArrayList* arraylist_init_from(int* arr, size_t length, size_t capacity, size_t element_size)
-// {
-
-//     if (length>capacity || arr==NULL)
-//     {
-//         return NULL;
-//     }
-//     ArrayList *ptr = (ArrayList *)malloc(sizeof(ArrayList));
-
-//     ptr->length = length;
-//     ptr->capacity = capacity;
-//     ptr->element_size = element_size;
-//     ptr->data = (int *)malloc(ptr->capacity * element_size);
-
-//     for (int i = 0; i < length; i++)
-//     {
-//         ptr->data[i] = arr[i];
-//     }
-//     return ptr;
-// }

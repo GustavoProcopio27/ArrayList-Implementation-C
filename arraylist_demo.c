@@ -1,5 +1,7 @@
 #include <stdio.h>
+#include <stdlib.h> // para o free
 #include "arraylist.h"
+
 // gcc arraylist_demo.c arraylist.c -o demo; ./demo
 typedef char* string; // Seria tão agravel se criassem um desse na porra da string.h
 

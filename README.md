@@ -68,9 +68,17 @@ A biblioteca utiliza macros para fornecer auxílio na tipagem e internamente ger
 Cria uma nova lista capaz de armazenar elementos do tipo especificado.
 
 ```C
-    ArrayList *list = arraylist_init(int);
+ArrayList *list = arraylist_init(int);
 ```
 Internamente chama: ```arraylist_new(sizeof(type))```
+
+```ArrayList* arraylist_init_from(void* array, size_t length, size_t capacity, type)```
+Cria uma nova lista capaz de armazenar elementos do tipo especificado, inicializando-a com elementos de uma array passada.
+```C
+int teste[] = {1,2,3,4,5};
+
+ArrayList* list = arraylist_init_from(teste,5,0, int);
+```
 
 ---
 
@@ -135,7 +143,10 @@ Se não for encontrado retorna ```-1```
 ```int arraylist_count(ArrayList* arraylist, type element) ```                          
 Conta quantas vezes um elemento aparece na lista.
 ```C
-    int count = arraylist_count(list, 10);
+int teste[] = {1,2,10,10,5};
+
+ArrayList* list = arraylist_init_from(teste,5,0, int);
+int count = arraylist_count(list, 10);
 ```
 
 ---
@@ -149,7 +160,12 @@ Efeitos:
 - ```length = 0```
 - ```capacity = 8```
 - memória é realocada
+```C
+int teste[] = {1,2,3,4,5};
 
+ArrayList* list = arraylist_init_from(teste,5,0, int);
+arraylist_clear(list)
+```
 ---
 
 ### Liberar memória:
@@ -157,7 +173,9 @@ Efeitos:
 Libera completamente a lista.
 
 ```C
-    arraylist_free(list);
+ArrayList *list = arraylist_init(string);
+
+arraylist_free(list);
 ```
 Isso libera:
 

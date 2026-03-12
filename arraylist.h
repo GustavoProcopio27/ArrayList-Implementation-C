@@ -18,6 +18,14 @@ typedef struct
     size_t element_size;    /**< Tamanho em bytes de cada elemento */
 } ArrayList;
 
+/**
+ * @brief Macro que automatiza o calculo do comprimento de uma array
+ * 
+ * @param arr Array que se deseja saber o comprimento
+ * @return size_t comprimento
+ **/
+#define len(array) (sizeof(array) / sizeof((array)[0]))
+
 // ===============================================================================================================
 
 /**
@@ -26,10 +34,24 @@ typedef struct
  * 
  * @param type Tipo de dado a ser armazenado
  * 
- **/
+**/
 #define arraylist_init(type) arraylist_new(sizeof(type))
-ArrayList *arraylist_new(size_t element_size);
+ArrayList* arraylist_new(size_t element_size);
 
+// ===============================================================================================================
+
+/**
+ * @brief Macro para inicialização da estrutura ArrayList a partir de uma array
+ * Permite criar a lista passando o endereço de uma array criada, seu comprimento, a capacidade desejada, e o tipo de dado
+ *
+ * @param array  Ponteiro para a array usada como fonte
+ * @param length Comprimento da array (pode ser obtido com a macro len deste modulo)
+ * @param capacity Capacidade máxima de elementos antes de necessitar realocar
+ * @param type Tipo de dado a ser armazenado
+ *
+ **/
+#define arraylist_init_from(array, length, capacity, type) arraylist_new_from(array, length, capacity, sizeof(type))
+ArrayList *arraylist_new_from(void *array, size_t length, size_t capacity, size_t element_size);
 
 // ===============================================================================================================
 
@@ -51,7 +73,7 @@ ArrayList *arraylist_new(size_t element_size);
         _arraylist_append(arraylist, &temp);                          \
     } while (0)
 
-void _arraylist_append(ArrayList *arrayList, void *element);
+    void _arraylist_append(ArrayList *arrayList, void *element);
 
 // ===============================================================================================================
 
@@ -115,16 +137,10 @@ void _arraylist_set(ArrayList *arrayList, int index, void *element);
  * @param element valor do elemento que se deseja saber o indice
  * @return Indice do elemento
 **/
-#define arraylist_indexOf(arraylist, element, type)                   \
-    do                                                                \
-    {                                                                 \
+#define arraylist_indexOf(arraylist, element, type)({                 \
         type temp = (element);                                        \
-        /*! Alternativa com compound literal(C99):*/                  \
-        /* Não usada aqui porque alguns editores de texto não */      \
-        /* lidam bem com macros desse tipo e geram warnings. */       \
-        /*_arraylist_append(arraylist, &(typeof(element)){element})*/ \
-        _arraylist_indexOf(arraylist, &temp)                          \
-    } while (0)
+        _arraylist_indexOf(arraylist, &temp);                         \
+    })
 
 int _arraylist_indexOf(ArrayList *arrayList, void* element);
 
@@ -138,16 +154,10 @@ int _arraylist_indexOf(ArrayList *arrayList, void* element);
  * @param element valor do elemento que se deseja saber a quantidade de vezes
  * @return Número de vezes que o elemento aparece na lista
  **/
-#define arraylist_count(arraylist, element)                           \
-    do                                                                \
-    {                                                                 \
+#define arraylist_count(arraylist, element, type) ({                  \
         type temp = (element);                                        \
-        /*! Alternativa com compound literal(C99):*/                  \
-        /* Não usada aqui porque alguns editores de texto não */      \
-        /* lidam bem com macros desse tipo e geram warnings. */       \
-        /*_arraylist_append(arraylist, &(typeof(element)){element})*/ \
-        _arraylist_count(arraylist, &temp)                            \
-    } while (0)
+        _arraylist_count(arraylist, &temp);                           \
+    }) 
 int _arraylist_count(ArrayList *arrayList, void* element);
 
 // ===============================================================================================================
@@ -167,9 +177,9 @@ void arraylist_clear(ArrayList *arrayList);
  **/
 void arraylist_free(ArrayList *arrayList);
 
+
+
 #endif
-
-
 
 
 // Eai, primeira biblioteca feita em C após uns 3 anos sem mexer nisso
