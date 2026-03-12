@@ -21,6 +21,7 @@ int main()
         printf("Elementos restantes: (%s)\n", arraylist_get(list,i,string));
     }
     arraylist_free(list); // Não esqueça disso
-
+    free(popped);
+    
     return 0;
 }
