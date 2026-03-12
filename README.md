@@ -65,6 +65,7 @@ A biblioteca utiliza macros para fornecer auxílio na tipagem e internamente ger
 
 ### Inicialização:
 ```ArrayList* arraylist_init(type);```
+
 Cria uma nova lista capaz de armazenar elementos do tipo especificado.
 
 ```C
@@ -72,7 +73,9 @@ ArrayList *list = arraylist_init(int);
 ```
 Internamente chama: ```arraylist_new(sizeof(type))```
 
+---
 ```ArrayList* arraylist_init_from(void* array, size_t length, size_t capacity, type)```
+
 Cria uma nova lista capaz de armazenar elementos do tipo especificado, inicializando-a com elementos de uma array passada.
 ```C
 int teste[] = {1,2,3,4,5};
@@ -83,7 +86,8 @@ ArrayList* list = arraylist_init_from(teste,5,0, int);
 ---
 
 ### Adicionar elemento:
-```void arraylist_add(ArrayList* arraylist, type element, type); ```                      
+```void arraylist_add(ArrayList* arraylist, type element, type); ```  
+
 Adiciona um elemento ao final da lista.
 ```C
 int a=29
@@ -101,14 +105,18 @@ Funcionamento:
 ---
 ### Remover elemento:
 ```type* arraylist_pop(ArrayList* arraylist,int index, type);``` 
+
 Remove o elemento no índice especificado e retorna uma cópia alocada.
+
 > ⚠️ Importante: O retorno precisa ser liberado com free().
 
 ---
 
 ### Obter elemento:
 ```type arraylist_get(ArrayList* arraylist, int index, type);```
+
 Retorna o valor do elemento no índice especificado.
+
 ```C
 int value = arraylist_get(list, 0, int);
 ```
@@ -122,7 +130,8 @@ Internamente:
 
 ---
 ### Modificar elemento
-```void arraylist_set(ArrayList* arraylist,int index, type element, type) ```               
+```void arraylist_set(ArrayList* arraylist,int index, type element, type) ``` 
+
 Substitui o elemento no índice especificado.
 ```C
 arraylist_set(list, 0, 99, int);
@@ -130,7 +139,8 @@ arraylist_set(list, 0, 99, int);
 
 ---
 ### Buscar índice:
-```int arraylist_indexOf(ArrayList* arraylist, type element, type)```                   
+```int arraylist_indexOf(ArrayList* arraylist, type element, type)``` 
+
 Retorna o índice da primeira ocorrência do elemento.
 ```C
 int index = arraylist_indexOf(list, 10, int);
