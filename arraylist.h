@@ -179,6 +179,51 @@ void arraylist_free(ArrayList *arrayList);
 
 
 
+
+
+/**
+ * @brief Macro para iterar sobre todos os elementos da lista
+ *
+ * Executa uma função para cada valor armazenado.
+ *
+ * @param arraylist lista a ser iterada
+ * @param func função que recebe (type*) com o valor
+ * @param type tipo de elementos na arraylist
+**/
+#define arraylist_foreach(arraylist, func, type)                        \
+    for (int i = 0; i < arraylist->length; i++)                         \
+    {                                                                   \
+        func(((type *)_arraylist_get_element_address(arraylist,i)));    \
+    }
+
+//=====================================================================================================================
+
+/**
+ * @brief Aplica uma função a cada elemento da lista e retorna uma nova lista com os resultados
+ *
+ * A função passada deve receber um ponteiro generico para o elemento atual
+ * e retornar um ponteiro para o novo valor.
+ *
+ * @param list lista de origem
+ * @param func função que transforma cada elemento
+ * @param type tipo da nova lista para caso a transformação feita altera o tipo de dado dos elementos
+ *
+ * @return nova LinkedList contendo os valores transformados
+ * É responsabilidade do usuario liberar a lista nova e adequar a função para uso da macro.
+ **/
+#define arraylist_map(arraylist, func, type)                                            \
+    ({                                                                                  \
+        ArrayList *new_list = arraylist_new(sizeof(type));                              \
+                                                                                        \
+        for (int i = 0; i < arraylist->length; i++)                                     \
+        {                                                                               \
+            type new_val = *(type *)func(_arraylist_get_element_address(arraylist, i)); \
+            _arraylist_append(new_list, &new_val);                                      \
+        }                                                                               \
+                                                                                        \
+        new_list;                                                                       \
+    })
+
 #endif
 
 

@@ -146,7 +146,7 @@ Retorna o índice da primeira ocorrência do elemento.
 int index = arraylist_indexOf(list, 10, int);
 ```
 Se não for encontrado retorna ```-1```
-
+Utiliza *linear search* devido a lista poder não estar ordenada
 
 ---
 ### Contar ocorrências:
@@ -194,20 +194,66 @@ Isso libera:
 - a estrutura ArrayList
 
 
+### Iteração:
+```arraylist_foreach(arraylist, func, type)```
+Executa uma função sobre todos elementos da lista, 
+A função deve receber type* e retornar void
+
+Exemplo:
+```C
+void print_square_list_int(int* val){
+    static int counter = 0;
+    printf("index %d: %d\n", counter,((*val) * (*val)));
+    counter++;
+}
+
+int teste[] = {1,10,10,4,5};
+
+ArrayList* list = arraylist_init_from(teste,5,0, int);
+arraylist_foreach(list,print_square_list_int,int);
+```
+
+
+---
+
+### Mapeamento:
+```arraylist_map(arraylist, func, type)```
+
+Executa uma função sobre todos elementos da arraylist modificando ela
+Retorna uma nova lista
+Exemplo:
+```C
+void* mult_by_pi(void* v)
+{
+    static float  res;
+    int val = *(int*)v;
+    res = (float) val;
+    res*=3.1415f;
+    return &res;
+}
+
+
+int teste[] = {1,10,10,4,5};
+
+ArrayList *list = arraylist_init_from(teste,5,0, int);
+
+ArrayList *list2 = arraylist_map(list,mult_by_pi,float);
+
+arraylist_free(list);
+arraylist_free(list2);
+```
+
+
+
+É de responsabilidade do usuário liberar a nova lista com ```arraylist_free()```
+
+
 
 ## 🔜 Melhorias futuras:
 
 Algumas ideias para evoluir a biblioteca:
 
-* iteradores
-
 * ordenação
-
-* implementar busca binária no ```arraylist_indexOf``` caso a arraylist possua mais de 30 elementos
-
-* shrink automático da capacidade
-
-* funções de map/filter
 
 * suporte a comparadores customizados
 
